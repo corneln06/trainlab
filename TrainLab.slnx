@@ -1,0 +1,17 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/TrainLab.Api/TrainLab.Api.csproj" />
+    <Project Path="src/TrainLab.Infrastructure/TrainLab.Infrastructure.csproj" />
+    <Project Path="src/TrainLab.Modules.Activities/TrainLab.Modules.Activities.csproj" />
+    <Project Path="src/TrainLab.Modules.Analytics/TrainLab.Modules.Analytics.csproj" />
+    <Project Path="src/TrainLab.Modules.Import/TrainLab.Modules.Import.csproj" />
+    <Project Path="src/TrainLab.Modules.Maps/TrainLab.Modules.Maps.csproj" />
+    <Project Path="src/TrainLab.Modules.Profile/TrainLab.Modules.Profile.csproj" />
+    <Project Path="src/TrainLab.SharedKernel/TrainLab.SharedKernel.csproj" />
+    <Project Path="src/TrainLab.Tools.BulkImport/TrainLab.Tools.BulkImport.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/TrainLab.IntegrationTests/TrainLab.IntegrationTests.csproj" />
+    <Project Path="tests/TrainLab.UnitTests/TrainLab.UnitTests.csproj" />
+  </Folder>
+</Solution>

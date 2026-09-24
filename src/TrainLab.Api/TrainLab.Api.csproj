@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <ItemGroup>
+    <ProjectReference Include="..\TrainLab.Infrastructure\TrainLab.Infrastructure.csproj" />
+    <ProjectReference Include="..\TrainLab.Modules.Activities\TrainLab.Modules.Activities.csproj" />
+    <ProjectReference Include="..\TrainLab.Modules.Analytics\TrainLab.Modules.Analytics.csproj" />
+    <ProjectReference Include="..\TrainLab.Modules.Import\TrainLab.Modules.Import.csproj" />
+    <ProjectReference Include="..\TrainLab.Modules.Maps\TrainLab.Modules.Maps.csproj" />
+    <ProjectReference Include="..\TrainLab.Modules.Profile\TrainLab.Modules.Profile.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+</Project>
