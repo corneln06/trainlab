@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/spikes/">
+    <Project Path="spikes/FitParse/FitParse.csproj" />
+  </Folder>
   <Folder Name="/src/">
     <Project Path="src/TrainLab.Api/TrainLab.Api.csproj" />
     <Project Path="src/TrainLab.Infrastructure/TrainLab.Infrastructure.csproj" />
