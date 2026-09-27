@@ -47,3 +47,20 @@ foreach (var v in message.Records.Take(10))
     
 }
 Console.WriteLine($"Records: {message.Records.Count}");
+var resultLoad = LoadCalculator.Calculate(message.Records);
+
+var RideDate = DateOnly.FromDateTime(message.Sessions[0].GetStartTime()!
+    .GetDateTime().ToLocalTime());
+var loadPerDay = new Dictionary<DateOnly, double>()
+{
+    [RideDate] = resultLoad.Load
+};
+var resultPmc = PmcCalculator.ComputePmc(loadPerDay, RideDate, RideDate.AddDays(30));
+
+Console.WriteLine(
+    $"TRIMP {resultLoad.Trimp:F2} | TRIMP_1h_LT {resultLoad.TrimpOneHourAtThreshold:F2} | " +
+    $"Load {resultLoad.Load:F1} | Minutes {resultLoad.Minutes:F2}");
+foreach (var day in resultPmc.Take(10))
+{
+    Console.WriteLine($"{day.Day}  load {day.LoadPerDay:F0}  CTL {day.Ctl:F1}  ATL {day.Atl:F1}  TSB {day.Tsb:F1}");
+}    
