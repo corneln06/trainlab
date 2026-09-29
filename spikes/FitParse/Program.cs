@@ -77,3 +77,10 @@ else
 {
     Console.WriteLine($"Decoupling not applicable: {decoupling.Reason}");
 }
+double gpsDistance = GeoCalculator.TotalTrackDistance(message.Records);
+double deviceDistance = message.Sessions[0].GetTotalDistance() ?? 0;
+double differencePercent = (gpsDistance - deviceDistance) / deviceDistance * 100;
+
+Console.WriteLine(
+    $"Distance: device {deviceDistance:F0} m | summed GPS {gpsDistance:F0} m | " +
+    $"difference {differencePercent:+0.0;-0.0}%");
