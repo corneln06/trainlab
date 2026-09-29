@@ -64,3 +64,16 @@ foreach (var day in resultPmc.Take(10))
 {
     Console.WriteLine($"{day.Day}  load {day.LoadPerDay:F0}  CTL {day.Ctl:F1}  ATL {day.Atl:F1}  TSB {day.Tsb:F1}");
 }    
+
+var decoupling = DecouplingCalculator.Calculate(message.Records);
+
+if (decoupling.isEligible)
+{
+    Console.WriteLine(
+    $"Decoupling {decoupling.DecouplingPercent:F1}% " +
+        $"(EF first half {decoupling.EfFirstHalf:F4}, second half {decoupling.EfSecondHalf:F4})");
+}
+else
+{
+    Console.WriteLine($"Decoupling not applicable: {decoupling.Reason}");
+}
