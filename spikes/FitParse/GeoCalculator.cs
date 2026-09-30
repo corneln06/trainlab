@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 using Dynastream.Fit;
 
 namespace FitParse;
@@ -43,5 +45,40 @@ public static class GeoCalculator
         }
 
         return total;
+    }
+
+    public static void ExportGeoJson(List<RecordMesg?> records, string path)
+    {
+        var coordinates = new List<double[]>();
+
+        foreach (var r in records)
+        {
+            int? latSemicircles = r?.GetPositionLat();
+            int? lonSemicircles = r?.GetPositionLong();
+
+            if (latSemicircles is null || lonSemicircles is null)
+            {
+                continue;
+            }
+
+            double lat = latSemicircles.Value * SemicirclesToDegrees;
+            double lon = lonSemicircles.Value * SemicirclesToDegrees;
+            
+            coordinates.Add(new[] { lon, lat });
+        }
+
+        var geoJson = new
+        {
+            type = "Feature",
+            properties = new { },
+            geometry = new
+            {
+                type = "LineString",
+                coordinates
+            }
+        };
+
+        Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+        System.IO.File.WriteAllText(path, JsonSerializer.Serialize(geoJson));
     }
 }

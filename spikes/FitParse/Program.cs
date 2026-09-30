@@ -84,3 +84,5 @@ double differencePercent = (gpsDistance - deviceDistance) / deviceDistance * 100
 Console.WriteLine(
     $"Distance: device {deviceDistance:F0} m | summed GPS {gpsDistance:F0} m | " +
     $"difference {differencePercent:+0.0;-0.0}%");
+GeoCalculator.ExportGeoJson(message.Records, "spikes/map/public/track.geojson");
+Console.WriteLine("Track exported to spikes/map/public/track.geojson");    

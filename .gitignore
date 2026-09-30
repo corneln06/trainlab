@@ -489,3 +489,4 @@ web/dist/
 .env
 *.local
 TestData/private/
+spikes/map/public/*.geojson
