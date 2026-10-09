@@ -1,5 +1,6 @@
 using Serilog;
 
+using TrainLab.Api.Errors;
 using TrainLab.Infrastructure;
 using TrainLab.Modules.Import;
 
@@ -16,9 +17,18 @@ builder.Services.AddSerilog((services, logger) => logger.ReadFrom
     .FromLogContext());
 
 
-var app = builder.Build();
+builder.Services.AddProblemDetails();
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
+
+var app = builder.Build();
 app.UseSerilogRequestLogging();
+app.UseExceptionHandler();
+
+app.MapGet("/debug/crash", () =>
+{
+    throw new InvalidOperationException("Test crash");
+});
 
 app.Logger.LogInformation("Starting TrainLab in {Environment}", app.Environment.EnvironmentName);
 app.Run();
