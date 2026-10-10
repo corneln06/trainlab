@@ -1,3 +1,5 @@
+using Scalar.AspNetCore;
+
 using Serilog;
 
 using TrainLab.Api.Errors;
@@ -22,6 +24,8 @@ var connectionString = builder.Configuration.GetConnectionString("Default") ?? t
     
     builder.Services.AddHealthChecks()
         .AddNpgSql(connectionString, name: "database");
+    builder.Services.AddOpenApi();
+
 
 
 var app = builder.Build();
@@ -29,6 +33,14 @@ app.UseSerilogRequestLogging();
 app.UseExceptionHandler();
 
 app.MapHealthChecks("/health");
+
+if (app.Environment.IsDevelopment())
+{
+    app.MapOpenApi("/openapi/v1.json");
+    app.MapScalarApiReference("/scalar");
+    
+}
+app.MapGet("/", () => "Hello World!");
 
 app.Logger.LogInformation("Starting TrainLab in {Environment}", app.Environment.EnvironmentName);
 app.Run();
