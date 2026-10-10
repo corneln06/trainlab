@@ -4,7 +4,6 @@ using TrainLab.Api.Errors;
 using TrainLab.Infrastructure;
 using TrainLab.Modules.Import;
 
-
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOptions<StorageOptions>()
     .Bind(builder.Configuration.GetSection(StorageOptions.SectionName))
@@ -19,16 +18,17 @@ builder.Services.AddSerilog((services, logger) => logger.ReadFrom
 
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+var connectionString = builder.Configuration.GetConnectionString("Default") ?? throw new InvalidOperationException("Connection string 'Default' is missing.");
+    
+    builder.Services.AddHealthChecks()
+        .AddNpgSql(connectionString, name: "database");
 
 
 var app = builder.Build();
 app.UseSerilogRequestLogging();
 app.UseExceptionHandler();
 
-app.MapGet("/debug/crash", () =>
-{
-    throw new InvalidOperationException("Test crash");
-});
+app.MapHealthChecks("/health");
 
 app.Logger.LogInformation("Starting TrainLab in {Environment}", app.Environment.EnvironmentName);
 app.Run();
