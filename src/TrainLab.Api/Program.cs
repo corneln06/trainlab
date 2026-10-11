@@ -13,6 +13,8 @@ using TrainLab.Modules.Maps.Persistence;
 using TrainLab.Modules.Profile.Persistence;
 using Microsoft.EntityFrameworkCore;
 
+using TrainLab.Api.Persistence;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOptions<StorageOptions>()
     .Bind(builder.Configuration.GetSection(StorageOptions.SectionName))
@@ -55,21 +57,7 @@ if (app.Environment.IsDevelopment())
 
 if (app.Environment.IsDevelopment())
 {
-    await using var scope = app.Services.CreateAsyncScope();
-    var services = scope.ServiceProvider;
-
-    DbContext[] contexts =
-    [
-        services.GetRequiredService<ActivitiesDbContext>(),
-        services.GetRequiredService<ProfileDbContext>(),
-        services.GetRequiredService<ImportDbContext>(),
-        services.GetRequiredService<AnalyticsDbContext>(),
-        services.GetRequiredService<MapsDbContext>(),
-    ];
-    foreach (var context in contexts)
-    {
-        await context.Database.MigrateAsync();
-    }
+    await DatabaseMigrator.MigrateAllAsync(app.Services);
 }
 app.MapGet("/", () => "Hello World!");
 
