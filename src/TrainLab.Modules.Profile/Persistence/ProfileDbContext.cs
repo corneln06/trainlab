@@ -1,8 +1,12 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+
+using TrainLab.Modules.Profile.Users;
 
 namespace TrainLab.Modules.Profile.Persistence;
 
-public class ProfileDbContext(DbContextOptions<ProfileDbContext> options) : DbContext(options)
+public class ProfileDbContext(DbContextOptions<ProfileDbContext> options) : IdentityDbContext<User, IdentityRole<Guid>, Guid>(options)
 {
     public const string Schema = "profile";
 
