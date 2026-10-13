@@ -1,5 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
+
 using Shouldly;
+
 using TrainLab.SharedKernel.Events;
 
 namespace TrainLab.UnitTests.Events;
