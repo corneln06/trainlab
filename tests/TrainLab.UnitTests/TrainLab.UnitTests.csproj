@@ -25,6 +25,7 @@
     <ProjectReference Include="..\..\src\TrainLab.Modules.Import\TrainLab.Modules.Import.csproj" />
     <ProjectReference Include="..\..\src\TrainLab.Modules.Maps\TrainLab.Modules.Maps.csproj" />
     <ProjectReference Include="..\..\src\TrainLab.Modules.Profile\TrainLab.Modules.Profile.csproj" />
+    <ProjectReference Include="..\..\src\TrainLab.SharedKernel\TrainLab.SharedKernel.csproj" />
   </ItemGroup>
 
 </Project>

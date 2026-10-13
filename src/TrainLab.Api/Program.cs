@@ -14,6 +14,7 @@ using TrainLab.Modules.Import;
 using TrainLab.Modules.Import.Persistence;
 using TrainLab.Modules.Maps.Persistence;
 using TrainLab.Modules.Profile.Persistence;
+using TrainLab.SharedKernel.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOptions<StorageOptions>()
@@ -41,6 +42,8 @@ builder.Services.AddDbContext<AnalyticsDbContext>(options => options.UseTrainLab
 builder.Services.AddDbContext<MapsDbContext>(options => options.UseTrainLabPostgres(connectionString, MapsDbContext.Schema));
 builder.Services.AddDbContext<ActivitiesDbContext>(options => options.UseTrainLabPostgres(connectionString, ActivitiesDbContext.Schema));
 
+builder.Services.AddSingleton(TimeProvider.System);
+builder.Services.AddScoped<IEventPublisher, InProcessEventPublisher>();
 
 var app = builder.Build();
 app.UseSerilogRequestLogging();
