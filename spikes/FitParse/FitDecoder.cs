@@ -18,8 +18,8 @@ public class FitDecoder
         decoder.MesgEvent += broadcaster.OnMesg;
         decoder.MesgDefinitionEvent += broadcaster.OnMesgDefinition;
 
-        broadcaster.FileIdMesgEvent += OnFileIdMesg ;
-        broadcaster.SessionMesgEvent += OnSessionMesg ;
+        broadcaster.FileIdMesgEvent += OnFileIdMesg;
+        broadcaster.SessionMesgEvent += OnSessionMesg;
         broadcaster.RecordMesgEvent += OnRecordMessage;
 
         decoder.Read(stream);
@@ -40,5 +40,5 @@ public class FitDecoder
     {
         Messages.Records.Add(e.mesg as RecordMesg);
     }
-  
+
 }

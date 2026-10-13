@@ -10,10 +10,10 @@ public class AnalyticsDbContext(DbContextOptions<AnalyticsDbContext> options) : 
         ModelBuilder optionsBuilder)
     {
         base.OnModelCreating(optionsBuilder);
-        
+
         optionsBuilder.HasDefaultSchema(Schema);
         optionsBuilder.ApplyConfigurationsFromAssembly(
             typeof(AnalyticsDbContext).Assembly);
     }
-    
+
 }

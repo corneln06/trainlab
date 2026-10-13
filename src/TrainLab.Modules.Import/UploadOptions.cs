@@ -8,6 +8,6 @@ public class UploadOptions
     public int MaxFileSizeBytes { get; set; }
     [Range(1, 100)]
     public int MaxFilesPerRequest { get; set; }
-    
+
     public const string SectionName = "Upload";
 }

@@ -43,8 +43,8 @@ foreach (var v in message.Records.Take(10))
             $"speed {v.GetEnhancedSpeed():F2} m/s  alt {v.GetEnhancedAltitude():F1} m  " +
             $"lat {lat:F6}  lon {lon:F6}");
     }
-   
-    
+
+
 }
 Console.WriteLine($"Records: {message.Records.Count}");
 var resultLoad = LoadCalculator.Calculate(message.Records);
@@ -63,7 +63,7 @@ Console.WriteLine(
 foreach (var day in resultPmc.Take(10))
 {
     Console.WriteLine($"{day.Day}  load {day.LoadPerDay:F0}  CTL {day.Ctl:F1}  ATL {day.Atl:F1}  TSB {day.Tsb:F1}");
-}    
+}
 
 var decoupling = DecouplingCalculator.Calculate(message.Records);
 
@@ -85,4 +85,4 @@ Console.WriteLine(
     $"Distance: device {deviceDistance:F0} m | summed GPS {gpsDistance:F0} m | " +
     $"difference {differencePercent:+0.0;-0.0}%");
 GeoCalculator.ExportGeoJson(message.Records, "spikes/map/public/track.geojson");
-Console.WriteLine("Track exported to spikes/map/public/track.geojson");    
+Console.WriteLine("Track exported to spikes/map/public/track.geojson");

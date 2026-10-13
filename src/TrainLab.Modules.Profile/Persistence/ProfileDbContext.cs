@@ -9,7 +9,7 @@ public class ProfileDbContext(DbContextOptions<ProfileDbContext> options) : DbCo
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        
+
         modelBuilder.HasDefaultSchema(Schema);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ProfileDbContext).Assembly);
     }

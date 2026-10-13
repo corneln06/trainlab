@@ -6,7 +6,7 @@ namespace FitParse;
 
 public static class GeoCalculator
 {
-    private const double SemicirclesToDegrees = 180.0 / 2147483648.0; 
+    private const double SemicirclesToDegrees = 180.0 / 2147483648.0;
 
     public static double HaversineMeters(double lat1, double lon1, double lat2, double lon2)
     {
@@ -63,7 +63,7 @@ public static class GeoCalculator
 
             double lat = latSemicircles.Value * SemicirclesToDegrees;
             double lon = lonSemicircles.Value * SemicirclesToDegrees;
-            
+
             coordinates.Add(new[] { lon, lat });
         }
 
