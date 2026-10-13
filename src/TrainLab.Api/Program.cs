@@ -61,6 +61,10 @@ if (app.Environment.IsDevelopment())
 }
 app.MapGet("/", () => "Hello World!");
 
+app.UseStaticFiles();
+app.Map("/api/{**rest}", () => TypedResults.NotFound());
+
+app.MapFallbackToFile("index.html");
 
 app.Logger.LogInformation("Starting TrainLab in {Environment}", app.Environment.EnvironmentName);
 app.Run();
