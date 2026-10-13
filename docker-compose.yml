@@ -24,6 +24,23 @@ services:
     ports:
       - "5341:5341"
       - "8082:80"
+    
+  app:
+    build: .
+    profiles: [ "full" ]
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__Default: "Host=db;Port=5432;Database=trainlab;Username=trainlab;Password=trainlab_dev_pw"
+      Storage__RootPath: /data/storage
+      Serilog__WriteTo__1__Args__serverUrl: http://seq:5341
+    ports:
+      - "8080:8080"
+    volumes:
+      - storage-data:/data/storage
 
 volumes:
   db-data:
+  storage-data:
