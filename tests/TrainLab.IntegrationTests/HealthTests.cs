@@ -1,7 +1,9 @@
 using System.Net;
 
 namespace TrainLab.IntegrationTests;
+
 using Shouldly;
+
 using TrainLab.IntegrationTests.Infrastructure;
 
 
@@ -18,5 +20,5 @@ public class HealthTests(TrainLabApiFactory factory)
         response.StatusCode.ShouldBe(HttpStatusCode.OK);
         (await response.Content.ReadAsStringAsync()).ShouldBe("Healthy");
     }
-   
+
 }

@@ -11,7 +11,7 @@ public static class LoadCalculator
     public const int Lthr = 174;
     public const double A = 0.64;
     public const double B = 1.92;
-    public const double MaxGapSeconds = 30; 
+    public const double MaxGapSeconds = 30;
     public static LoadResult Calculate(List<RecordMesg?> records)
     {
         double trimp = 0;
@@ -32,7 +32,7 @@ public static class LoadCalculator
                 dtMinutes = gapSeconds > MaxGapSeconds ? 0 : gapSeconds / 60.0;
             }
             previousTime = time;
-            
+
             byte? hr = sample?.GetHeartRate();
             if (hr is null)
             {
@@ -42,14 +42,14 @@ public static class LoadCalculator
             trimp += Contribution(dtMinutes, HrReserve(hr.Value));
         }
         double trimpAtThreshold = Contribution(60, HrReserve(Lthr));
-        
+
         double load = trimp / trimpAtThreshold * 100;
 
         return new LoadResult(trimp, trimpAtThreshold, load, minutes);
     }
     private static double HrReserve(double hr) =>
         (hr - HrRest) / (HrMax - HrRest);
-    
+
     private static double Contribution(double dtMinutes, double hrr) =>
         dtMinutes * hrr * A * Math.Exp(B * hrr);
 }

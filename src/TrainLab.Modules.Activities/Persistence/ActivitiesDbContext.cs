@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace TrainLab.Modules.Activities.Persistence;
 
-public class ActivitiesDbContext(DbContextOptions<ActivitiesDbContext>  options) : DbContext(options)
+public class ActivitiesDbContext(DbContextOptions<ActivitiesDbContext> options) : DbContext(options)
 {
     public const string Schema = "activities";
 
@@ -12,7 +12,7 @@ public class ActivitiesDbContext(DbContextOptions<ActivitiesDbContext>  options)
 
         modelBuilder.HasPostgresExtension("timescaledb");
         modelBuilder.HasPostgresExtension("postgis");
-        
+
         modelBuilder.HasDefaultSchema(Schema);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ActivitiesDbContext).Assembly);
     }

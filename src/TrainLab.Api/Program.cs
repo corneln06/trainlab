@@ -1,8 +1,11 @@
+using Microsoft.EntityFrameworkCore;
+
 using Scalar.AspNetCore;
 
 using Serilog;
 
 using TrainLab.Api.Errors;
+using TrainLab.Api.Persistence;
 using TrainLab.Infrastructure;
 using TrainLab.Infrastructure.Persistence;
 using TrainLab.Modules.Activities.Persistence;
@@ -11,9 +14,6 @@ using TrainLab.Modules.Import;
 using TrainLab.Modules.Import.Persistence;
 using TrainLab.Modules.Maps.Persistence;
 using TrainLab.Modules.Profile.Persistence;
-using Microsoft.EntityFrameworkCore;
-
-using TrainLab.Api.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOptions<StorageOptions>()
@@ -30,10 +30,10 @@ builder.Services.AddSerilog((services, logger) => logger.ReadFrom
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 var connectionString = builder.Configuration.GetConnectionString("Default") ?? throw new InvalidOperationException("Connection string 'Default' is missing.");
-    
-    builder.Services.AddHealthChecks()
-        .AddNpgSql(connectionString, name: "database");
-    builder.Services.AddOpenApi();
+
+builder.Services.AddHealthChecks()
+    .AddNpgSql(connectionString, name: "database");
+builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<ProfileDbContext>(options => options.UseTrainLabPostgres(connectionString, ProfileDbContext.Schema));
 builder.Services.AddDbContext<ImportDbContext>(options => options.UseTrainLabPostgres(connectionString, ImportDbContext.Schema));
@@ -52,7 +52,7 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi("/openapi/v1.json");
     app.MapScalarApiReference("/scalar");
-    
+
 }
 
 if (app.Environment.IsDevelopment())

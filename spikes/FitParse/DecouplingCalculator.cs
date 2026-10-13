@@ -52,7 +52,7 @@ public static class DecouplingCalculator
             return DecouplingResult.NotApplicable(
                 "Not enough samples with speed and heart rate");
         }
-        
+
         var start = samples[0].Time;
         var end = samples[^1].Time;
         var durationMinutes = (end - start).TotalMinutes;
@@ -82,4 +82,4 @@ public static class DecouplingCalculator
     }
     private static double EfficiencyFactor(List<Sample> half) =>
         half.Average(s => s.Speed) / half.Average(s => s.Hr);
-    }
+}
