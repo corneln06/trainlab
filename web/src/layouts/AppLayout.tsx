@@ -1,6 +1,7 @@
 import { NavLink, Outlet } from 'react-router'
 import HealthBadge from '../components/api/HealthBadge'
 import ThemeToggle from '../components/ThemeToggler'
+import UserMenu from '../components/UserMenu'
 
 
 const links = [
@@ -25,6 +26,7 @@ export default function AppLayout(){
           <span className="flex-1 px-2 text-lg font-semibold">TrainLab</span>
           <HealthBadge />
           <ThemeToggle />
+          <UserMenu />
         </header>
 
         <main className="flex-1 p-6">

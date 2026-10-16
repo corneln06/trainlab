@@ -11,6 +11,9 @@ import AnalyticsPage from "./pages/AnalyticsPage.tsx";
 import HeatmapPage from "./pages/HeatmapPage.tsx";
 import SettingsPage from "./pages/SettingsPage.tsx";
 import NotFoundPage from "./pages/NotFoundPage.tsx";
+import RequireAuth from "./auth/RequireAuth.tsx";
+import LoginPage from "./pages/LoginPage.tsx";
+import RegisterPage from "./pages/RegisterPage.tsx";
 
 const queryClient = new QueryClient();
 
@@ -18,15 +21,20 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <Routes>
-          <Route element={<AppLayout />}>
-            <Route index element={<DashboardPage />} />
-            <Route path="activities" element={<ActivitiesPage />} />
-            <Route path="import" element={<ImportPage />} />
-            <Route path="analytics" element={<AnalyticsPage />} />
-            <Route path="heatmap" element={<HeatmapPage />} />
-            <Route path="settings" element={<SettingsPage />} />
-            <Route path="*" element={<NotFoundPage />} />
+       <Routes>
+          <Route path="login" element={<LoginPage />} />
+          <Route path="register" element={<RegisterPage />} />
+
+          <Route element={<RequireAuth />}>
+            <Route element={<AppLayout />}>
+              <Route index element={<DashboardPage />} />
+              <Route path="activities" element={<ActivitiesPage />} />
+              <Route path="import" element={<ImportPage />} />
+              <Route path="analytics" element={<AnalyticsPage />} />
+              <Route path="heatmap" element={<HeatmapPage />} />
+              <Route path="settings" element={<SettingsPage />} />
+              <Route path="*" element={<NotFoundPage />} />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>
