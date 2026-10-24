@@ -14,6 +14,7 @@ import NotFoundPage from "./pages/NotFoundPage.tsx";
 import RequireAuth from "./auth/RequireAuth.tsx";
 import LoginPage from "./pages/LoginPage.tsx";
 import RegisterPage from "./pages/RegisterPage.tsx";
+import RedirectIfLoggedIn from "./auth/RedirectIfLoggedIn.tsx";
 
 const queryClient = new QueryClient();
 
@@ -22,9 +23,10 @@ createRoot(document.getElementById("root")!).render(
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
        <Routes>
+        <Route element={<RedirectIfLoggedIn />}>
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
-
+        </Route>
           <Route element={<RequireAuth />}>
             <Route element={<AppLayout />}>
               <Route index element={<DashboardPage />} />
