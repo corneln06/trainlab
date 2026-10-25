@@ -186,6 +186,45 @@ namespace TrainLab.Modules.Profile.Persistence.Migrations
                     b.ToTable("AspNetUserTokens", "profile");
                 });
 
+            modelBuilder.Entity("TrainLab.Modules.Profile.Athletes.AthleteProfile", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.Property<int?>("BirthYear")
+                        .HasColumnType("integer")
+                        .HasColumnName("birth_year");
+
+                    b.Property<int?>("MaxHr")
+                        .HasColumnType("integer")
+                        .HasColumnName("max_hr");
+
+                    b.Property<int?>("RestingHr")
+                        .HasColumnType("integer")
+                        .HasColumnName("resting_hr");
+
+                    b.Property<string>("Sex")
+                        .HasMaxLength(16)
+                        .HasColumnType("character varying(16)")
+                        .HasColumnName("sex");
+
+                    b.Property<string>("TimeZone")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
+                        .HasColumnName("time_zone");
+
+                    b.Property<double?>("WeightKg")
+                        .HasColumnType("double precision")
+                        .HasColumnName("weight_kg");
+
+                    b.HasKey("UserId")
+                        .HasName("pk_athlete_profiles");
+
+                    b.ToTable("athlete_profiles", "profile");
+                });
+
             modelBuilder.Entity("TrainLab.Modules.Profile.Users.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -322,6 +361,16 @@ namespace TrainLab.Modules.Profile.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_asp_net_user_tokens_asp_net_users_user_id");
+                });
+
+            modelBuilder.Entity("TrainLab.Modules.Profile.Athletes.AthleteProfile", b =>
+                {
+                    b.HasOne("TrainLab.Modules.Profile.Users.User", null)
+                        .WithOne()
+                        .HasForeignKey("TrainLab.Modules.Profile.Athletes.AthleteProfile", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_athlete_profiles_asp_net_users_user_id");
                 });
 #pragma warning restore 612, 618
         }

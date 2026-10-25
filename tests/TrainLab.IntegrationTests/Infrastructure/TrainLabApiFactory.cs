@@ -1,3 +1,5 @@
+using System.Net.Http.Json;
+
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 
@@ -28,5 +30,15 @@ public sealed class TrainLabApiFactory : WebApplicationFactory<Program>, IAsyncL
     {
         await _database.DisposeAsync();
         await base.DisposeAsync();
+    }
+    public async Task<HttpClient> CreateLoggedInClientAsync()
+    {
+        var client = CreateClient();
+        var credentials = new { email = $"{Guid.NewGuid()}@test.local", password = "Test123!" };
+
+        (await client.PostAsJsonAsync("/api/auth/register", credentials)).EnsureSuccessStatusCode();
+        (await client.PostAsJsonAsync("/api/auth/login?useCookies=true", credentials)).EnsureSuccessStatusCode();
+
+        return client;
     }
 }
