@@ -1,4 +1,7 @@
 using System.Security.Claims;
+using System.Text.Json.Serialization;
+
+using FluentValidation;
 
 using Microsoft.AspNetCore.Identity;
 
@@ -15,6 +18,7 @@ using TrainLab.Modules.Analytics.Persistence;
 using TrainLab.Modules.Import;
 using TrainLab.Modules.Import.Persistence;
 using TrainLab.Modules.Maps.Persistence;
+using TrainLab.Modules.Profile.Athletes;
 using TrainLab.Modules.Profile.Persistence;
 using TrainLab.Modules.Profile.Users;
 using TrainLab.SharedKernel.Events;
@@ -46,12 +50,15 @@ builder.Services.AddHealthChecks()
     .AddNpgSql(connectionString, name: "database");
 
 builder.Services.AddOpenApi();
-
+builder.Services.ConfigureHttpJsonOptions(options =>
+    options.SerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 builder.Services.AddDbContext<ActivitiesDbContext>(o => o.UseTrainLabPostgres(connectionString, ActivitiesDbContext.Schema));
 builder.Services.AddDbContext<ProfileDbContext>(o => o.UseTrainLabPostgres(connectionString, ProfileDbContext.Schema));
 builder.Services.AddDbContext<ImportDbContext>(o => o.UseTrainLabPostgres(connectionString, ImportDbContext.Schema));
 builder.Services.AddDbContext<AnalyticsDbContext>(o => o.UseTrainLabPostgres(connectionString, AnalyticsDbContext.Schema));
 builder.Services.AddDbContext<MapsDbContext>(o => o.UseTrainLabPostgres(connectionString, MapsDbContext.Schema));
+builder.Services
+    .AddValidatorsFromAssemblyContaining<UpdateAthleteProfileValidator>();
 
 builder.Services.AddIdentityApiEndpoints<User>()
     .AddEntityFrameworkStores<ProfileDbContext>();
@@ -101,6 +108,7 @@ api.MapGet("/me", (ClaimsPrincipal user) => TypedResults.Ok(new
     Id = user.FindFirstValue(ClaimTypes.NameIdentifier),
     Email = user.FindFirstValue(ClaimTypes.Email),
 }));
+api.MapProfileEndpoints();
 
 app.Map("/api/{**rest}", () => TypedResults.NotFound());
 
