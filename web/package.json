@@ -8,11 +8,13 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test" : "vitest run"
+    "test": "vitest run",
+    "gen:api": "npx --yes openapi-typescript@7 http://localhost:5222/openapi/v1.json -o src/api/schema.d.ts"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
     "@tanstack/react-query": "^5.104.1",
+    "openapi-fetch": "^0.17.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-router": "^7.18.4",
