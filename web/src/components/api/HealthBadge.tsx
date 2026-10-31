@@ -7,7 +7,6 @@ async function fetchHealth(): Promise<string> {
         throw Error(`Unexpected status ${response.status}`)
     }
     return response.text();
-    
 }
 export default function HealthBadge(){
     const {data, isPending, isError} = useQuery({
@@ -23,5 +22,6 @@ export default function HealthBadge(){
         <span className={`badge ${data === "Healthy" ? "badge-success" : "badge-warning"}`}>
             API {data}
         </span>
+        
     )
 }
