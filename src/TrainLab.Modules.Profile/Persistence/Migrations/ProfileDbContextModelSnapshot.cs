@@ -306,6 +306,41 @@ namespace TrainLab.Modules.Profile.Persistence.Migrations
                     b.ToTable("AspNetUsers", "profile");
                 });
 
+            modelBuilder.Entity("TrainLab.Modules.Profile.Zones.ZoneSet", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<DateOnly>("EffectiveFrom")
+                        .HasColumnType("date")
+                        .HasColumnName("effective_from");
+
+                    b.Property<int>("Lthr")
+                        .HasColumnType("integer")
+                        .HasColumnName("lthr");
+
+                    b.Property<string>("Sport")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("character varying(16)")
+                        .HasColumnName("sport");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_zone_sets");
+
+                    b.HasIndex("UserId", "Sport", "EffectiveFrom")
+                        .IsUnique()
+                        .HasDatabaseName("ix_zone_sets_user_id_sport_effective_from");
+
+                    b.ToTable("zone_sets", "profile");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
@@ -371,6 +406,16 @@ namespace TrainLab.Modules.Profile.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_athlete_profiles_asp_net_users_user_id");
+                });
+
+            modelBuilder.Entity("TrainLab.Modules.Profile.Zones.ZoneSet", b =>
+                {
+                    b.HasOne("TrainLab.Modules.Profile.Users.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_zone_sets_asp_net_users_user_id");
                 });
 #pragma warning restore 612, 618
         }
