@@ -21,6 +21,7 @@ using TrainLab.Modules.Maps.Persistence;
 using TrainLab.Modules.Profile.Athletes;
 using TrainLab.Modules.Profile.Persistence;
 using TrainLab.Modules.Profile.Users;
+using TrainLab.Modules.Profile.Zones;
 using TrainLab.SharedKernel.Events;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -78,6 +79,7 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddSingleton(TimeProvider.System);
 builder.Services.AddScoped<IEventPublisher, InProcessEventPublisher>();
+builder.Services.AddScoped<ZoneSetLookup>();
 
 var app = builder.Build();
 
@@ -113,7 +115,7 @@ api.MapGet("/me", (ClaimsPrincipal user) => TypedResults.Ok(new
     Email = user.FindFirstValue(ClaimTypes.Email),
 }));
 api.MapProfileEndpoints();
-
+api.MapZoneEndpoints();
 app.Map("/api/{**rest}", () => TypedResults.NotFound());
 
 app.MapFallbackToFile("index.html");
