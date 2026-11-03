@@ -18,4 +18,3 @@ public record CreateZoneSetRequest(
     Sport Sport,
     int Lthr,
     DateOnly EffectiveFrom);
-

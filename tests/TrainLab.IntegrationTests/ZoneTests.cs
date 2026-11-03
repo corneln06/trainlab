@@ -31,11 +31,11 @@ public class ZoneTests(TrainLabApiFactory factory)
     }
 
     [Theory]
-    [InlineData("2025-12-31", null)] 
-    [InlineData("2026-01-01", 176)] 
-    [InlineData("2026-03-01", 176)]   
-    [InlineData("2026-09-15", 181)]   
-    [InlineData("2026-11-01", 181)]   
+    [InlineData("2025-12-31", null)]
+    [InlineData("2026-01-01", 176)]
+    [InlineData("2026-03-01", 176)]
+    [InlineData("2026-09-15", 181)]
+    [InlineData("2026-11-01", 181)]
     public async Task Effective_zone_set_depends_on_the_date(string date, int? expectedLthr)
     {
         var client = await factory.CreateLoggedInClientAsync();

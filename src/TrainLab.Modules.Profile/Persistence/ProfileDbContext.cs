@@ -12,7 +12,7 @@ public class ProfileDbContext(DbContextOptions<ProfileDbContext> options) : Iden
 {
     public const string Schema = "profile";
     public DbSet<AthleteProfile> AthleteProfiles => Set<AthleteProfile>();
-    public DbSet<ZoneSet>  ZoneSets => Set<ZoneSet>();
+    public DbSet<ZoneSet> ZoneSets => Set<ZoneSet>();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
