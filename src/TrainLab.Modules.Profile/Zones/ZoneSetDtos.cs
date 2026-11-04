@@ -4,14 +4,16 @@ public record ZoneSetResponse(
     Guid Id,
     Sport Sport,
     int Lthr,
-    DateOnly EffectiveFrom)
+    DateOnly EffectiveFrom,
+    IReadOnlyList<HeartRateZone> Zones)
 {
 
     public static ZoneSetResponse From(ZoneSet zoneSet) => new ZoneSetResponse(
         zoneSet.Id,
         zoneSet.Sport,
         zoneSet.Lthr,
-        zoneSet.EffectiveFrom);
+        zoneSet.EffectiveFrom,
+        ZoneCalculator.Calculate(zoneSet.Sport, zoneSet.Lthr));
 }
 
 public record CreateZoneSetRequest(

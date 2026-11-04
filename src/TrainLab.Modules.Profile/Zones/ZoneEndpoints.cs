@@ -22,6 +22,7 @@ public static class ZoneEndpoints
         group.MapGet("/", GetZones);
         group.MapPost("/", CreateZone);
         group.MapGet("/effective", GetEffectiveZone);
+        group.MapGet("/preview", PreviewZones);
 
         return api;
     }
@@ -94,5 +95,16 @@ public static class ZoneEndpoints
         return zoneSet is null
             ? TypedResults.NotFound()
             : TypedResults.Ok(ZoneSetResponse.From(zoneSet));
+    }
+    private static Results<Ok<IReadOnlyList<HeartRateZone>>, ValidationProblem> PreviewZones(Sport sport, int lthr)
+    {
+        if (lthr is < 100 or > 220)
+        {
+            return TypedResults.ValidationProblem(new Dictionary<string, string[]>
+            {
+                ["Lthr"] = ["LTHR must be between 100 and 220."],
+            });
+        }
+        return TypedResults.Ok(ZoneCalculator.Calculate(sport, lthr));
     }
 }
