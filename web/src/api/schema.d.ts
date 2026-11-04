@@ -556,6 +556,172 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/zones": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ZoneSetResponse"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["CreateZoneSetRequest"];
+                };
+            };
+            responses: {
+                /** @description Created */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ZoneSetResponse"];
+                    };
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+                    };
+                };
+                /** @description Conflict */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/zones/effective": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query: {
+                    sport: components["schemas"]["Sport"];
+                    date: string;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ZoneSetResponse"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/zones/preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query: {
+                    sport: components["schemas"]["Sport"];
+                    lthr: number;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["HeartRateZone"][];
+                    };
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -583,8 +749,22 @@ export interface components {
             maxHr: null | number;
             timeZone: string;
         };
+        CreateZoneSetRequest: {
+            sport: components["schemas"]["Sport"];
+            /** Format: int32 */
+            lthr: number;
+            /** Format: date */
+            effectiveFrom: string;
+        };
         ForgotPasswordRequest: {
             email: string;
+        };
+        HeartRateZone: {
+            name: string;
+            /** Format: int32 */
+            minBpm: null | number;
+            /** Format: int32 */
+            maxBpm: null | number;
         };
         HttpValidationProblemDetails: {
             type?: null | string;
@@ -629,6 +809,8 @@ export interface components {
         };
         /** @enum {unknown} */
         Sex: "Male" | "Female" | null;
+        /** @enum {unknown} */
+        Sport: "Running" | "Cycling";
         TwoFactorRequest: {
             enable?: null | boolean;
             twoFactorCode?: null | string;
@@ -655,6 +837,16 @@ export interface components {
             /** Format: int32 */
             maxHr: null | number;
             timeZone: string;
+        };
+        ZoneSetResponse: {
+            /** Format: uuid */
+            id: string;
+            sport: components["schemas"]["Sport"];
+            /** Format: int32 */
+            lthr: number;
+            /** Format: date */
+            effectiveFrom: string;
+            zones: components["schemas"]["HeartRateZone"][];
         };
     };
     responses: never;

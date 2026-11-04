@@ -11,7 +11,7 @@ namespace TrainLab.IntegrationTests;
 public class ZoneTests(TrainLabApiFactory factory)
 {
     private sealed record ZoneDto(Guid Id, string Sport, int Lthr, DateOnly EffectiveFrom);
-
+    private sealed record ZoneBoundsDto(string Name, int? MinBpm, int? MaxBpm);
     private static Task<HttpResponseMessage> CreateZoneAsync(
         HttpClient client, string sport, int lthr, string effectiveFrom) =>
         client.PostAsJsonAsync("/api/zones", new { sport, lthr, effectiveFrom });
@@ -28,6 +28,17 @@ public class ZoneTests(TrainLabApiFactory factory)
 
         zones.ShouldNotBeNull();
         zones.Select(z => z.Lthr).ShouldBe([176, 181]);
+    }
+    [Fact]
+    public async Task Preview_returns_calculated_zones()
+    {
+        var client = await factory.CreateLoggedInClientAsync();
+
+        var zones = await client.GetFromJsonAsync<List<ZoneBoundsDto>>("/api/zones/preview?sport=Running&lthr=181");
+
+        zones.ShouldNotBeNull();
+        zones.Count.ShouldBe(7);
+        zones[1].ShouldBe(new ZoneBoundsDto("Z2", 154, 161));
     }
 
     [Theory]
