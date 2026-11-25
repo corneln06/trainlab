@@ -15,7 +15,7 @@ import RequireAuth from "./auth/RequireAuth.tsx";
 import LoginPage from "./pages/LoginPage.tsx";
 import RegisterPage from "./pages/RegisterPage.tsx";
 import RedirectIfLoggedIn from "./auth/RedirectIfLoggedIn.tsx";
-
+import ZonesPage from "./pages/ZonesPage.tsx";
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(
@@ -34,6 +34,7 @@ createRoot(document.getElementById("root")!).render(
               <Route path="import" element={<ImportPage />} />
               <Route path="analytics" element={<AnalyticsPage />} />
               <Route path="heatmap" element={<HeatmapPage />} />
+              <Route path="zones" element={<ZonesPage />} />
               <Route path="settings" element={<SettingsPage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Route>

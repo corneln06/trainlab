@@ -10,6 +10,7 @@ const links = [
   { to: '/import', label: 'Import' },
   { to: '/analytics', label: 'Analytics' },
   { to: '/heatmap', label: 'Heatmap' },
+  { to: '/zones', label: 'Zones' },
   { to: '/settings', label: 'Settings' }
 ]
 
